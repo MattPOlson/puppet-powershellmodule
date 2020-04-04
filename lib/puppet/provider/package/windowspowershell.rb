@@ -7,7 +7,7 @@ Puppet::Type.type(:package).provide(:windowspowershell, parent: :powershellcore)
 
   def self.invoke_ps_command(command)
     result = powershell(['-NoProfile', '-ExecutionPolicy', 'Bypass', '-NonInteractive', '-NoLogo', '-Command',
-                         "$ProgressPreference = 'SilentlyContinue'; $ErrorActionPreference = 'Stop'; #{command}"])
+                         "$ProgressPreference = 'SilentlyContinue'; $ErrorActionPreference = 'Stop'; $WarningPreference = 'SilentlyContinue'; #{command}"])
     result.lines
   end
 end
