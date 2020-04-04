@@ -5,7 +5,7 @@ Puppet::Type.type(:psrepository).provide(:windowspowershell, parent: :powershell
   commands powershell: 'powershell'
 
   def self.invoke_ps_command(command)
-    result = powershell(['-noprofile', '-executionpolicy', 'bypass', '-command', command])
+    result = powershell(['-noprofile', '-executionpolicy', 'bypass', '-command', "$WarningPreference = 'SilentlyContinue'; #{command}"])
     result.lines
   end
 end
