@@ -9,7 +9,7 @@ Puppet::Type.type(:psrepository).provide(:powershellcore) do
   end
 
   def self.invoke_ps_command(command)
-    result = pwsh(['-NoProfile', '-NonInteractive', '-NoLogo', '-Command', "$ProgressPreference = 'SilentlyContinue'; #{command}"])
+    result = pwsh(['-NoProfile', '-NonInteractive', '-NoLogo', '-Command', "$ProgressPreference = 'SilentlyContinue'; $WarningPreference = 'SilentlyContinue'; #{command}"])
     Puppet.debug result.exitstatus
     Puppet.debug result.lines
     result.lines
