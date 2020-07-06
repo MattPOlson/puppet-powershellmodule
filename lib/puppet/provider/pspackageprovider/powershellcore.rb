@@ -74,6 +74,7 @@ Puppet::Type.type(:pspackageprovider).provide :powershellcore do
 
   def install_command
     command = []
+    command << "[Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12;"
     command << "PackageManagement\\Install-PackageProvider -Name #{@resource[:name]}"
     command << " -Force"
     command.join
