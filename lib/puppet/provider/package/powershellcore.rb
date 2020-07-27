@@ -85,7 +85,8 @@ Puppet::Type.type(:package).provide :powershellcore, parent: Puppet::Provider::P
   end
 
   def install_command
-    command = "Install-Module #{@resource[:name]} -Scope AllUsers -Force"
+    command = "[Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12;"
+    command << "Install-Module #{@resource[:name]} -Scope AllUsers -Force"
     command << " -RequiredVersion #{@resource[:ensure]}" unless [:present, :latest].include? @resource[:ensure]
     command << " -Repository #{@resource[:source]}" if @resource[:source]
     command << " #{install_options(@resource[:install_options])}" if @resource[:install_options]
@@ -101,7 +102,8 @@ Puppet::Type.type(:package).provide :powershellcore, parent: Puppet::Provider::P
   end
 
   def update_command
-    command = "Install-Module #{@resource[:name]} -Scope AllUsers -Force"
+    command = "[Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12;"
+    command << "Install-Module #{@resource[:name]} -Scope AllUsers -Force"
     command << " -Repository #{@resource[:source]}" if @resource[:source]
     command << " #{install_options(@resource[:install_options])}" if @resource[:install_options]
     command
